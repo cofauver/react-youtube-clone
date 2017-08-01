@@ -1,15 +1,36 @@
-import React from 'react';
+import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
+import YTSearch from 'youtube-api-search';
 
-import App from './components/app';
-import reducers from './reducers';
+import SearchBar from './components/searchBar';
+import VideoList from './components/videoList';
 
-const createStoreWithMiddleware = applyMiddleware()(createStore);
+// DON'T MAKE ANY COMMITS OR DON'T PUSH TO GITHUB
+// const API_KEY = 'AIzaSyAyeoM27W6MxzscHwjo0mJkgvBI0ljdwIE';
+const API_KEY = process.env.YT_KEY;
+console.log('trial and error', process.env.YT_KEY)
 
-ReactDOM.render(
-  <Provider store={createStoreWithMiddleware(reducers)}>
-    <App />
-  </Provider>
-  , document.querySelector('.container'));
+
+class App extends Component{
+
+  constructor(props){
+    super(props);
+    this.state = {videos : []};
+    YTSearch({key: API_KEY, term:'ultimate frisbee'}, (videos) => {
+      console.log(videos);
+      this.setState({videos})
+      // ^ syntactic sugar for    this.setState({videos: videos})
+    });
+  }
+
+  render(){
+    return (
+      <div>
+        <SearchBar />
+        <VideoList videos={this.state.videos} />
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(<App/>, document.querySelector('.container'));
