@@ -6,10 +6,7 @@ import SearchBar from './components/searchBar';
 import VideoList from './components/videoList';
 
 // DON'T MAKE ANY COMMITS OR DON'T PUSH TO GITHUB
-// const API_KEY = 'AIzaSyAyeoM27W6MxzscHwjo0mJkgvBI0ljdwIE';
 const API_KEY = process.env.YT_KEY;
-console.log('trial and error', process.env.YT_KEY)
-
 
 class App extends Component{
 
